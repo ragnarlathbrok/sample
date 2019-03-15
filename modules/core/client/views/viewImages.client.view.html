@@ -1,0 +1,113 @@
+<section>
+  <div ng-include="'/modules/core/client/views/header.client.view.html'"></div>
+  <br>
+  <div align="center">
+    <br>
+    <div ng-show="vm.showHead">
+      <br>
+      <h3>Header
+        <h3><br>
+          <div data-ng-repeat="file in vm.head">
+            <div ng-if="vm.checkPhone(vm.hInfo[$index])">
+              <a class="linkText" ng-href="{{'tel:'+vm.hInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:90%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="280" height="266" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+            <div ng-if="vm.checkEmail(vm.hInfo[$index])">
+              <a class="linkText" ng-href="{{'mailto:'+vm.hInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:90%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="280" height="266" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+            <div ng-if="vm.checkUrl(vm.hInfo[$index])">
+              <a class="linkText" href="{{vm.hInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:90%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="280" height="266" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+          </div>
+    </div>
+    <div ng-show="vm.showBody">
+      <br>
+      <h3>Body
+        <h3><br>
+          <div data-ng-repeat="file in vm.body">
+            <div ng-if="vm.checkPhone(vm.bInfo[$index])">
+              <a class="linkText" ng-href="{{'tel:'+vm.bInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:100%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+            <div ng-if="vm.checkEmail(vm.bInfo[$index])">
+              <a class="linkText" ng-href="{{'mailto:'+vm.bInfo[$index]}}">
+          <img style="width:60%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:100%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+            <div ng-if="vm.checkUrl(vm.bInfo[$index])">
+              <a class="linkText" ng-href="{{vm.bInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:100%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+          </div>
+    </div>
+    <div ng-show="vm.showOther">
+      <br>
+      <h3>Other
+        <h3><br>
+          <div data-ng-repeat="file in vm.other">
+            <div ng-if="vm.checkPhone(vm.oInfo[$index])">
+              <a class="linkText" ng-href="{{'tel:'+vm.oInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:100%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+            <div ng-if="vm.checkEmail(vm.oInfo[$index])">
+              <a class="linkText" ng-href="{{'email:'+vm.oInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:100%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+            <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+            <div ng-if="vm.checkUrl(vm.oInfo[$index])">
+              <a class="linkText" ng-href="{{vm.oInfo[$index]}}">
+          <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+          <video class="home-video" style="width:100%" ng-if="vm.checkVideo(file.mimetype)" controls="controls" oncontextmenu="return false;">
+              <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+          </a><br><br>
+            </div>
+            <!-- <center><a class="linkText" ng-show="vm.oInfo[$index] !== ''" ng-href="{{'tel:'+vm.oInfo[$index]}}">{{vm.hInfo[$index]}}</a>
+            </center>
+            <center><a class="linkText" ng-hide="vm.oInfo[$index] !== ''"> <br></a>
+            </center><br>  -->
+          </div>
+    </div>
+  </div>
+</section>

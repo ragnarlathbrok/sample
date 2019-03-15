@@ -1,0 +1,23 @@
+<div class="login" ng-controller="AuthenticationController">
+  <div class="login-header">
+  <br><br><br>
+    <h1>Login</h1>
+  </div>
+ 
+  <form name="userForm" ng-submit="signin(userForm.$valid)" class="signin" novalidate autocomplete="off">
+    <div class="login-form signin-form">
+      <h3 class="username-header font-black">Username</h3>
+      <input type="text" id="username" name="username" class="form-control" ng-model="credentials.username" placeholder="Username"
+        lowercase required/><br>
+      <h3 class="password-header font-black">Password</h3>
+      <input type="password" id="password" name="password" class="form-control" ng-model="credentials.password" placeholder="Password"
+        required>
+      <br>
+      <button type="submit" class="btn btn-primary login-button">Sign in</button>
+      <br>
+    </div>
+    <alert type="danger" ng-show="error" class="login-error text-center text-danger">
+      <span ng-bind="error"></span>
+    </alert>
+  </form>
+  </div>

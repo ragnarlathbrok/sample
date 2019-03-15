@@ -1,0 +1,408 @@
+<section ng-init="vm.getAllImages()">
+  <div ng-include="'/modules/core/client/views/header.client.view.html'"></div>
+  <br><br><br><br>
+  <div class="container">
+    <div class="row"><br><br><br><br>
+      <div class="col-md-3">
+        <div id="update">
+          <label for="way"> Update Images</label>
+          <select name="select" ng-model="vm.update.model" class="form-control" required>
+            <option style="display:none" value="">What you want to Do</option>
+            <option ng-repeat="update in vm.update.options" value="{{update.value}}">{{update.name}}</option>
+          </select>
+        </div>
+        <div ng-if="vm.update.model === 'insert'">
+          <label for="optype">Choose Operation</label>
+          <select name="select" ng-model="vm.insert.model" class="form-control" required>
+            <option style="display:none" value="">Choose your operation</option>
+            <option ng-repeat="option in vm.insert.options" value="{{option.value}}">{{option.name}}</option>
+          </select>
+        </div>
+        <div ng-if="vm.update.model === 'delete'">
+          <label for="optype">Choose Operation</label>
+          <select name="select" ng-model="vm.delete.model" class="form-control" required>
+            <option style="display:none" value="">Choose your operation</option>
+            <option ng-repeat="option in vm.delete.options" value="{{option.value}}">{{option.name}}</option>
+          </select>
+        </div>
+        <div ng-if="vm.update.model === 'addinfo'">
+          <div id="image-selection">
+            <label for="imageCategory">Which Images</label>
+            <select name="categorySelect" ng-model="vm.infoOptions.model" class="form-control" required>
+              <option style="display:none" value="">Select Image Category</option>
+              <option ng-repeat="option in vm.infoOptions.options" value="{{option.value}}">{{option.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div ng-if="vm.update.model === 'prioritize'">
+          <div id="image-selection">
+            <label for="imageCategory">Which Images</label>
+            <select name="categorySelect" ng-model="vm.priorityOptions.model" class="form-control" required>
+              <option style="display:none" value="">Select Image Category</option>
+              <option ng-repeat="option in vm.priorityOptions.options" value="{{option.value}}">{{option.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-offset-3 col-md-6">
+        <div ng-if="vm.insert.model==='append' && vm.update.model !== 'delete' && vm.update.model !== 'addinfo' && vm.update.model !== 'prioritize'">
+          <div id="image-selection">
+            <label for="imageCategory"> Image You Want To Upload </label>
+            <select name="categorySelect" ng-model="vm.data.model" class="form-control" required>
+              <option style="display:none" value="">Select Image Category</option>
+              <option ng-repeat="option in vm.data.options" value="{{option.value}}">{{option.name}}</option>
+            </select>
+          </div>
+          <div id="image-way">
+            <label for="way"> How you would like to upload</label>
+            <select name="categorySelect" ng-model="vm.options.model" class="form-control" required>
+              <option style="display:none" value="">How you want to upload</option>
+              <option ng-repeat="option in vm.options.options" value="{{option.value}}">{{option.name}}</option>
+            </select>
+          </div>
+          <br><br>
+          <form ng-if="vm.options.model === 'browse'" method="post" action="{{vm.addOperation()}}" id="upload-form" enctype="multipart/form-data">
+            <center>
+              <input type="file" id="upload" name="myimage" multiple required/>
+            </center>
+            <br>
+            <input class="btn btn-info" type="submit" class="font-white" value="Upload" name="submit" />
+          </form>
+          <form ng-if="vm.options.model === 'link'" ng-submit="vm.appendUrls()">
+            <div data-ng-repeat="choice in vm.choices">
+              <label for="way">Type</label>
+              <select name="filetype" ng-model="choice.type" class="btn btn-default" required>
+                <option style="display:none" value="">File Type</option>
+                <option ng-repeat="option in vm.type.options" value="{{option.value}}">{{option.name}}</option>
+              </select>
+              <input class="link" type="text" ng-model="choice.url" name="" placeholder="Add the Link">
+              <button class="remove" ng-click="vm.removeChoice($index)">-</button>
+            </div>
+            <a class="addFields" ng-click="vm.addNewChoice()" role="button">Add fields</a>
+            <button type="submit" class="btn btn-primary login-button">Upload</button>
+          </form>
+        </div>
+        <div ng-if="vm.insert.model==='prepend' && vm.update.model !== 'delete' && vm.update.model.options.value !== 'addinfo' && vm.update.model !== 'prioritize'">
+          <div id="image-selection">
+            <label for="imageCategory"> Image You Want To Upload </label>
+            <select name="categorySelect" ng-model="vm.data.model" class="form-control" required>
+              <option style="display:none" value="">Select Image Category</option>
+              <option ng-repeat="option in vm.data.options" value="{{option.value}}">{{option.name}}</option>
+            </select>
+          </div>
+          <div id="image-way">
+            <label for="way"> How you would like to upload</label>
+            <select name="categorySelect" ng-model="vm.options.model" class="form-control" required>
+              <option style="display:none" value="">How you want to upload</option>
+              <option ng-repeat="option in vm.options.options" value="{{option.value}}">{{option.name}}</option>
+            </select>
+          </div>
+          <br><br>
+          <form ng-if="vm.options.model === 'browse'" method="post" action="{{vm.preOperation()}}" id="upload-form" enctype="multipart/form-data">
+            <center>
+              <input type="file" id="upload" name="myimage" multiple required/>
+            </center>
+            <br>
+            <input class="btn btn-info" type="submit" class="font-white" value="Upload" name="submit" />
+          </form>
+          <form ng-if="vm.options.model === 'link'" ng-submit="vm.prependUrls()">
+            <div data-ng-repeat="choice in vm.choices">
+              <label for="way">Type</label>
+              <select name="filetype" ng-model="choice.type" class="btn btn-default" required>
+                <option style="display:none" value="">File Type</option>
+                <option ng-repeat="option in vm.type.options" value="{{option.value}}">{{option.name}}</option>
+              </select>
+              <input class="link" type="text" ng-model="choice.url" name="" placeholder="Add the Link">
+              <button class="remove" ng-click="vm.removeChoice($index)">-</button>
+            </div>
+            <a class="addFields" ng-click="vm.addNewChoice()" role="button">Add fields</a>
+            <button type="submit" class="btn btn-primary login-button">Upload</button>
+          </form>
+        </div>
+        <div ng-if="vm.insert.model === 'replace' && vm.update.model !== 'delete' && vm.update.model !== 'addinfo' && vm.update.model !== 'prioritize'">
+          <div class="replace">
+            <div id="image-selection">
+              <label for="imageCategory">Please Select what you want to Replace</label>
+              <select name="categorySelect" ng-model="vm.data.model" class="form-control" required>
+              <option style="display:none" value="">Select Image Category</option>
+              <option ng-repeat="option in vm.data.options" value="{{option.value}}">{{option.name}}</option>
+            </select>
+            </div>
+            <div ng-if="vm.data.model === 'header'">
+              <div ng-if="vm.showHead">
+                <div ng-repeat="file in vm.head">
+                  <br><br>
+                  <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+                  <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                    <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+                  </video>
+                  <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+                  <a class="btn btn-danger" ng-click="vm.replaceHeader($index)" role="button">Replace</a>
+                  <div ng-show="vm.show[$index]">
+                    <div id="image-way">
+                      <label for="way"> How you would like to upload</label>
+                      <select name="categorySelect" ng-model="vm.updateOptions.model" class="form-control" required>
+                      <option style="display:none" value="">How you want to upload</option>
+                      <option ng-repeat="option in vm.updateOptions.options" value="{{option.value}}">{{option.name}}</option>
+                    </select>
+                    </div>
+                    <br><br>
+                    <form ng-if="vm.updateOptions.model === 'browse'" method="post" action="{{vm.addUpdateAction()}}" id="upload-form" enctype="multipart/form-data">
+                      <center>
+                        <input type="file" id="upload" name="myimage" required/>
+                      </center>
+                      <br>
+                      <input class="btn btn-info" type="submit" class="font-white" value="Upload" name="submit" />
+                    </form>
+                    <form ng-if="vm.updateOptions.model === 'link'" ng-submit="vm.replaceWithUrl()">
+                      <div>
+                        <label for="way">Type</label>
+                        <select name="filetype" ng-model="vm.updateHeaderChoices.mimetype" class="btn btn-default" required>
+                        <option style="display:none" value="">File Type</option>
+                        <option ng-repeat="option in vm.type.options" value="{{option.value}}">{{option.name}}</option>
+                      </select>
+                        <input class="link" type="text" ng-model="vm.updateHeaderChoices.path" name="" placeholder="Add the Link">
+                      </div>
+                      <button type="submit" class="btn btn-primary login-button">Upload</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div ng-hide="vm.showHead">
+                No Images Available in Head
+              </div>
+            </div>
+            <div ng-if="vm.data.model === 'body'">
+              <div ng-show="vm.showBody">
+                <div ng-repeat="file in vm.body">
+                  <br><br>
+                  <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+                  <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                    <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+                  </video>
+                  <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+                  <a class="btn btn-danger" ng-click="vm.replaceBody($index)" role="button">Replace</a>
+                  <div ng-show="vm.showB[$index]">
+                    <div id="image-way">
+                      <label for="way"> How you would like to upload</label>
+                      <select name="categorySelect" ng-model="vm.updateOptions.model" class="form-control" required>
+                      <option style="display:none" value="">How you want to upload</option>
+                      <option ng-repeat="option in vm.updateOptions.options" value="{{option.value}}">{{option.name}}</option>
+                    </select>
+                    </div>
+                    <br><br>
+                    <form ng-if="vm.updateOptions.model === 'browse'" method="post" action="{{vm.addUpdateAction()}}" id="upload-form" enctype="multipart/form-data">
+                      <center>
+                        <input type="file" id="upload" name="myimage" required/>
+                      </center>
+                      <br>
+                      <input class="btn btn-info" type="submit" class="font-white" value="Upload" name="submit" />
+                    </form>
+                    <form ng-if="vm.updateOptions.model === 'link'" ng-submit="vm.replaceWithUrl()">
+                      <div>
+                        <label for="way">Type</label>
+                        <select name="filetype" ng-model="vm.updateHeaderChoices.mimetype" class="btn btn-default" required>
+                        <option style="display:none" value="">File Type</option>
+                        <option ng-repeat="option in vm.type.options" value="{{option.value}}">{{option.name}}</option>
+                      </select>
+                        <input class="link" type="text" ng-model="vm.updateHeaderChoices.path" name="" placeholder="Add the Link">
+                      </div>
+                      <button type="submit" class="btn btn-primary login-button">Upload</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div ng-hide="vm.showBody">
+                No Images Available in Body
+              </div>
+            </div>
+            <div ng-if="vm.data.model === 'other'">
+              <div ng-show="vm.showOther">
+                <div ng-repeat="file in vm.other">
+                  <br><br>
+                  <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+                  <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                    <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+                  </video>
+                  <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+                  <a class="btn btn-danger" ng-click="vm.replaceOther($index)" role="button">Replace</a>
+                  <div ng-show="vm.showO[$index]">
+                    <div id="image-way">
+                      <label for="way"> How you would like to upload</label>
+                      <select name="categorySelect" ng-model="vm.updateOptions.model" class="form-control" required>
+                      <option style="display:none" value="">How you want to upload</option>
+                      <option ng-repeat="option in vm.updateOptions.options" value="{{option.value}}">{{option.name}}</option>
+                    </select>
+                    </div>
+                    <br><br>
+                    <form ng-if="vm.updateOptions.model === 'browse'" method="post" action="{{vm.addUpdateAction()}}" id="upload-form" enctype="multipart/form-data">
+                      <center>
+                        <input type="file" id="upload" name="myimage" required/>
+                      </center>
+                      <br>
+                      <input class="btn btn-info" type="submit" class="font-white" value="Upload" name="submit" />
+                    </form>
+                    <form ng-if="vm.updateOptions.model === 'link'" ng-submit="vm.replaceWithUrl()">
+                      <div>
+                        <label for="way">Type</label>
+                        <select name="filetype" ng-model="vm.updateHeaderChoices.mimetype" class="btn btn-default" required>
+                        <option style="display:none" value="">File Type</option>
+                        <option ng-repeat="option in vm.type.options" value="{{option.value}}">{{option.name}}</option>
+                      </select>
+                        <input class="link" type="text" ng-model="vm.updateHeaderChoices.path" name="" placeholder="Add the Link">
+                      </div>
+                      <button type="submit" class="btn btn-primary login-button">Upload</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div ng-hide="vm.showOther">
+                No Images Available in Other
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-if="vm.delete.model === 'delAll' && vm.update.model !== 'insert' && vm.update.model !== 'addinfo' && vm.update.model !== 'prioritize'">
+          <div id="image-selection">
+            <label for="imageCategory">Please Select what you want to Delete</label>
+            <select name="categorySelect" ng-model="vm.data.model" class="form-control" required>
+              <option style="display:none" value="">Select Image Category</option>
+              <option ng-repeat="option in vm.data.options" value="{{option.value}}">{{option.name}}</option>
+            </select><br>
+            <center><button class="btn btn-danger" ng-click="vm.deleteAll()">Delete All</button></center>
+            <br>
+            <br><br>
+            <h5 ng-if="vm.data.model === 'header'">* Deletes all the Header Images</h5>
+            <h5 ng-if="vm.data.model === 'body'">* Deletes all the body images</h5>
+            <h5 ng-if="vm.data.model === 'other'">* Deletes all the other images</h5>
+          </div>
+        </div>
+        <div ng-if="vm.delete.model === 'delP' && vm.update.model !== 'insert' && vm.update.model !== 'addinfo' && vm.update.model !== 'prioritize'">
+          <label for="imageCategory">Please Select what you want to Delete</label>
+          <select name="categorySelect" ng-model="vm.data.model" class="form-control" required>
+              <option style="display:none" value="">Select Image Category</option>
+              <option ng-repeat="option in vm.data.options" value="{{option.value}}">{{option.name}}</option>
+          </select><br>
+          <center><button class="btn btn-danger" ng-click="vm.deleteImages()">Save</button></center>
+          <br>
+          <div ng-if="vm.data.model === 'header'">
+            <div ng-if="vm.showHead">
+              <div ng-repeat="file in vm.head">
+                <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+                <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                  <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+                </video>
+                <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+                <button class="remove" ng-click="vm.removeImage($index)">-</button>
+              </div>
+            </div>
+            <div ng-hide="vm.showHead">No Image Available in Head</div>
+          </div>
+          <div ng-if="vm.data.model === 'body'">
+            <div ng-if="vm.showBody">
+              <div ng-repeat="file in vm.body">
+                <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+                <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                  <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+                </video>
+                <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+                <button class="remove" ng-click="vm.removeImage($index)">-</button>
+              </div>
+            </div>
+            <div ng-hide="vm.showBody">No Image Available in Body</div>
+          </div>
+          <div ng-if="vm.data.model === 'other'">
+            <div ng-if="vm.showOther">
+              <div ng-repeat="file in vm.other">
+                <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+                <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                  <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+                </video>
+                <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+                <button class="remove" ng-click="vm.removeImage($index)">-</button>
+              </div>
+            </div>
+            <div ng-hide="vm.showOther">No Image Available in Other</div>
+          </div>
+        </div>
+        <div ng-if="vm.infoOptions.model === 'header' && vm.update.model !== 'insert' && vm.update.model !== 'delete' && vm.update.model !== 'prioritize'">
+          <div ng-if="vm.showHead">
+          <button class="btn btn-success" ng-click="vm.addInfo()">Add Info</button>
+          <br><br>
+            <div ng-repeat="file in vm.head">
+              <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+              <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+              </video>
+              <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+              <input type="text" name="url-info" ng-model="vm.hinfo[$index]" id="info" class="url-info">
+            </div>
+            <div ng-hide="vm.showHead">No Images avaliable in header</div>
+          </div>
+        </div>
+        <div ng-if="vm.infoOptions.model === 'body' && vm.update.model !== 'insert' && vm.update.model !== 'delete' && vm.update.model !== 'prioritize'">
+          <div ng-if="vm.showBody">
+          <button class="btn btn-success" ng-click="vm.addInfo()">Add Info</button>
+          <br><br>
+            <div ng-repeat="file in vm.body">
+              <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+              <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+              </video>
+              <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+              <input type="text" name="url-info" ng-model="vm.binfo[$index]" id="info" class="url-info">
+            </div>
+            <div ng-hide="vm.showBody">No Images avaliable in Body</div>
+          </div>
+        </div>
+        <div ng-if="vm.infoOptions.model === 'other' && vm.update.model !== 'insert' && vm.update.model !== 'delete' && vm.update.model !== 'prioritize'">
+          <div ng-if="vm.showOther">
+          <button class="btn btn-success" ng-click="vm.addInfo()">Add Info</button>
+          <br><br>
+            <div ng-repeat="file in vm.other">
+              <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+              <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+              </video>
+              <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+              <input type="text" name="url-info" ng-model="vm.hinfo[$index]" id="info" class="url-info">
+            </div>
+            <div ng-hide="vm.showOther">No Images avaliable in Other</div>
+          </div>
+        </div>
+        <div ng-if="vm.priorityOptions.model === 'header' && vm.update.model !== 'insert' && vm.update.model !== 'delete' && vm.update.model !== 'addinfo'">
+          <div ng-if="vm.showHead">
+          <button class="btn btn-success" ng-click="vm.addPriority()">Add Priority</button>
+          <br><br>
+            <div ng-repeat="file in vm.head">
+              {{$index}}&nbsp;&nbsp;
+              <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+              <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+              </video>
+              <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+              <input type="number" name="url-priority" id="info" class="url-priority" min="0" max="{{vm.head.length-1}}">
+            </div>
+            <div ng-hide="vm.showHead">No Images avaliable in header</div>
+          </div>
+        </div>
+        <div ng-if="vm.priorityOptions.model === 'body' && vm.update.model !== 'insert' && vm.update.model !== 'delete' && vm.update.model !== 'addinfo'">
+          <div ng-if="vm.showBody">
+          <button class="btn btn-success" ng-click="vm.addPriority()">Add Priority</button>
+          <br><br>
+            <div ng-repeat="file in vm.body">
+                {{$index}}&nbsp;&nbsp;
+              <img style="width:50%" ng-if="vm.checkImage(file.mimetype)" ng-src="{{vm.getPath(file.path)}}">
+              <video class="view-video" style="width:100%" autoplay loop muted ng-if="vm.checkVideo(file.mimetype)" controls oncontextmenu="return false;">
+                <source ng-src="{{vm.getPath(file.path)}}"> Your browser does not support HTML5 video.
+              </video>
+              <iframe class="view-video" ng-if="vm.checkYoutube(file.mimetype)" width="420" height="420" ng-src="{{vm.getYoutubePath(file.path)}}"></iframe>
+              <input type="number" name="url-priority" id="info" class="url-priority" min="0" max="{{vm.body.length - 1}}">
+            </div>
+            <div ng-hide="vm.showBody">No Images avaliable in Body</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

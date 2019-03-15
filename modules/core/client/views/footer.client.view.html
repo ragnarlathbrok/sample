@@ -1,0 +1,52 @@
+<div class="pmj-footer">
+  <footer>
+    <!-- <div>
+      <iframe src="https://www.google.com/maps/d/embed?mid=1vAq6HE7yD7UI92NIeD_mPrUT8fQ&ll=16.95747507850724%2C79.54680684999994&z=8"
+        width="100%" height="350" frameborder="0" allowfullscreen></iframe>
+    </div> -->
+    <div class="row"><br><br>
+      <div class="col-md-offset-4 col-md-4"><img width="100%" src="../../../../../modules/core/client/img/footer-logo.png"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <div ng-if="vm.checkPhone(vm.oInfo[1])">
+          <a class="linkText" ng-href="{{'tel:'+vm.oInfo[1]}}">
+          <img  class="footer-image" style="width:95%; padding-left:30px"  ng-if="vm.checkImage(vm.other[1].mimetype)" ng-src="{{vm.getPath(vm.other[1].path)}}">
+          <video class="home-video" style="width:95%; padding-left:30px" autoplay loop muted ng-if="vm.checkVideo(vm.other[1].mimetype)" controls>
+            <source ng-src="{{vm.getPath(vm.other[1].path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(file.mimetype)" width="280" height="266" ng-src="{{vm.getPath(vm.other[1].path)}}"></iframe>
+          </a><br><br>
+        </div>
+        <div ng-if="vm.checkEmail(vm.oInfo[1])">
+          <a class="linkText" ng-href="{{'mailto:'+vm.oInfo[1]}}">
+          <img class="footer-image" style="width:95%; padding-left:30px" ng-if="vm.checkImage(vm.other[1].mimetype)" ng-src="{{vm.getPath(vm.other[1].path)}}">
+          <video class="home-video" style="width:95%; padding-left:30px"  autoplay loop muted ng-if="vm.checkVideo(vm.other[1].mimetype)" controls>
+            <source ng-src="{{vm.getPath(vm.other[1].path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(vm.other[1].mimetype)" width="280" height="266" ng-src="{{vm.getPath(vm.other[1].path)}}"></iframe>
+          </a><br><br>
+        </div>
+        <div ng-if="vm.checkUrl(vm.oInfo[1])">
+          <a class="linkText" ng-href="{{vm.oInfo[1]}}">
+          <img class="footer-image" style="width:95%; padding-left:30px"  ng-if="vm.checkImage(vm.other[1].mimetype)" ng-src="{{vm.getPath(vm.other[1].path)}}">
+          <video class="home-video" style="width:95%; padding-left:30px" autoplay loop muted ng-if="vm.checkVideo(vm.other[1].mimetype)" controls>
+            <source ng-src="{{vm.getPath(vm.other[1].path)}}"> Your browser does not support HTML5 video.
+          </video>
+          <iframe class="home-video" ng-if="vm.checkYoutube(vm.other[1].mimetype)" width="280" height="266" ng-src="{{vm.getPath(vm.other[1].path)}}"></iframe>
+          </a><br><br>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <p style="color:#33331a;font-size:80%">
+          BANJARA HILLS | HIMAYATH NAGAR | CHANDA NAGAR | VIJAYAWADA
+          <br>Customer Care: <a href="tel:914023300653">+91 4023300653</a>, <a href="tel:918008019281">+91 8008019281</a>          | Email: <a href="mailto:cr@pmjjewells.com">cr@pmjjewells.com</a>
+        </p>
+      </div>
+      <div class="col-md-4 text-center">
+        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FPMJJewels%2F&tabs&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=101606110351299"
+          width="340" height="250" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+      </div>
+    </div>
+  </footer>
+</div>

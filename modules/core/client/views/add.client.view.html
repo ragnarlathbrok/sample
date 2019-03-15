@@ -1,0 +1,42 @@
+<section>
+  <div ng-include="'/modules/core/client/views/header.client.view.html'"></div>
+  <br><br><br><br>
+  <div align="center" class="col-md-offset-3 col-md-6 box">
+    <div id="image-selection">
+    <label for="imageCategory"> Image You Want To Upload </label>
+    <!-- <select name="categorySelect" ng-model="vm.data.model" class="form-control" ng-change="vm.dropdown()"> -->
+      <select name="categorySelect" ng-model="vm.data.model" class="form-control" required>
+      <option style="display:none" value="">Select Image Category</option>
+      <option ng-repeat="option in vm.data.options" value="{{option.value}}">{{option.name}}</option>
+    </select>
+    </div>
+    <div id="image-way">
+      <label for="way"> How you would like to upload</label>
+      <select name="categorySelect" ng-model="vm.options.model" class="form-control" required>
+      <option style="display:none" value="">How you want to upload</option>
+      <option ng-repeat="option in vm.options.options" value="{{option.value}}">{{option.name}}</option>
+    </select>
+    </div>
+    <br><br>
+    <form ng-show="vm.options.model === 'browse'" method="post" action="{{vm.addAction()}}" id="upload-form" enctype="multipart/form-data">
+      <center>
+        <input type="file" id="upload" name="myimage" multiple required/>
+      </center>
+      <br>
+      <input class="btn btn-info" type="submit" class="font-white" value="Upload" name="submit" />
+    </form>
+    <form ng-show="vm.options.model === 'link'" ng-submit="vm.saveUrls()">
+      <div data-ng-repeat="choice in vm.choices">
+      <label for="way">Type</label>
+      <select name="filetype" ng-model="choice.type" class="btn btn-default" required>
+      <option style="display:none" value="">File Type</option>
+      <option ng-repeat="option in vm.type.options" value="{{option.value}}">{{option.name}}</option>
+    </select>
+      <input class="link" type="text" ng-model="choice.url" name="" placeholder="Add the Link">
+      <button class="remove" ng-click="vm.removeChoice($index)">-</button>
+      </div>
+      <a class="addFields" ng-click="vm.addNewChoice()" role="button">Add fields</a>
+      <button type="submit" class="btn btn-primary login-button">Upload</button>
+    </form>
+  </div>
+</section>

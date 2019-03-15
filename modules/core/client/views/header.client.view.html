@@ -1,0 +1,56 @@
+<div ng-controller="HeaderController">
+  <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div id="top">
+      <div class="navbar-header" >
+        <button ng-show="vm.authentication" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                   <a class="navbar-brand" href="/"><img ng-src="/modules/core/client/img/PMJ-Logo.jpg" height="50" alt="logo"></a> 
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-show="vm.authentication && vm.authentication.location !== '/'">
+            <a href="/">Home</a>
+          </li><li ng-show="vm.authentication && vm.authentication.location !== '/add-info'">
+            <a href="/add-info">Add Images</a>
+          </li>
+          <li ng-show="vm.authentication && vm.authentication.location !== '/viewImages'">
+            <a href="/viewImages">View Images</a>
+          </li>
+          <li ng-show="vm.authentication && vm.authentication.location !== '/updateImages'">
+            <a href="/updateImages">Update Images</a>
+          </li>
+          <li><ul class="nav navbar-nav navbar-right" ng-show="vm.authentication">
+            <li class="dropdown" dropdown>
+                <a class="dropdown-toggle user-header-dropdown-toggle" dropdown-toggle role="button">
+                    <img ng-src="{{vm.authentication.profileImageURL}}" alt="{{vm.authentication.displayName}}" class="header-profile-image" />
+                    <span ng-bind="vm.authentication.displayName"></span> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="settings.profile">Edit Profile</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="settings.picture">Change Profile Picture</a>
+                    </li>
+                    <li ui-sref-active="active" ng-show="vm.authentication.provider === 'local'">
+                        <a ui-sref="settings.password">Change Password</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="/api/auth/signout" target="_self">Signout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+</div>
